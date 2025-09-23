@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>K.P Organics</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f2eb; /* earthy/off-white */
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #6b8e23; /* olive green */
+      color: white;
+      padding: 1em 2em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header .logo {
+      display: flex;
+      align-items: center;
+    }
+    header .logo img {
+      height: 60px;
+      width: auto;
+      margin-right: 1em;
+    }
+    header .logo h1 {
+      margin: 0;
+      font-size: 1.8em;
+    }
+    nav a {
+      color: white;
+      margin: 0 1em;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      padding: 2em;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5em;
+    }
+    .product {
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1em;
+      width: calc(25% - 1.5em);
+      box-sizing: border-box;
+    }
+    .product img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .product h3 {
+      margin-top: 0.5em;
+      margin-bottom: 0.2em;
+    }
+    .product p {
+      margin: 0.2em 0 0.8em 0;
+    }
+    .product button {
+      background-color: #8fbc8f;
+      border: none;
+      padding: 0.5em 1em;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
+      font-size: 0.9em;
+    }
+    /* Cart & checkout section */
+    .cart-section {
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1em;
+      margin-top: 2em;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1em;
+    }
+    .cart-item .info {
+      flex: 1;
+    }
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+    }
+    .quantity-controls button {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #888;
+      background-color: #ddd;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .quantity-controls span.qty {
+      margin: 0 0.5em;
+      min-width: 20px;
+      text-align: center;
+    }
+    .item-total {
+      margin-left: 1em;
+    }
+    #cart-total {
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+    .checkout-button {
+      margin-top: 1em;
+      padding: 0.5em 1em;
+      background-color: #6b8e23;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    .checkout-form {
+      display: none;
+      margin-top: 2em;
+      background: #eef5e0;
+      padding: 1em;
+      border-radius: 8px;
+    }
+    .checkout-form input {
+      display: block;
+      width: 100%;
+      padding: 0.5em;
+      margin-bottom: 1em;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .checkout-form button {
+      padding: 0.5em 1em;
+      background-color: #6b8e23;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="vegeis.jpg" alt="K.P Organics Logo">
+      <h1>K.P Organics</h1>
+    </div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Vegetables</a>
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+      <a href="#">Payment</a>
+      <a href="#">Cart</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Our Vegetables</h2>
+    <div class="product-list" id="product-list">
+      <!-- Example products -->
+      <div class="product" data-id="1" data-name="Tomato" data-price="30">
+        <img src="tomato.jpg" alt="Tomato">
+        <h3>Tomato</h3>
+        <p>₹30 / kg</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      <div class="product" data-id="2" data-name="Carrot" data-price="40">
+        <img src="carrot.jpg" alt="Carrot">
+        <h3>Carrot</h3>
+        <p>₹40 / kg</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      <div class="product" data-id="3" data-name="Brinjal" data-price="35">
+        <img src="brinjal.jpg" alt="Brinjal">
+        <h3>Brinjal</h3>
+        <p>₹35 / kg</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      <div class="product" data-id="4" data-name="Spinach" data-price="25">
+        <img src="spinach.jpg" alt="Spinach">
+        <h3>Spinach</h3>
+        <p>₹25 / bunch</p>
+        <button class="add-to-cart-btn">Add to Cart</button>
+      </div>
+      <!-- add more vegetable items in same pattern -->
+    </div>
+
+    <!-- Cart with quantity editing + checkout form -->
+    <div class="cart-section" id="cart-section">
+      <h2>Your Cart</h2>
+      <div id="cart-items-container">
+        <!-- Cart items will show up here dynamically -->
+      </div>
+      <hr>
+      <p>Total: ₹<span id="cart-total">0</span></p>
+      <button class="checkout-button" id="checkout-btn">Checkout</button>
+
+      <div class="checkout-form" id="checkout-form">
+        <h3>Enter your details</h3>
+        <input type="text" id="phone" placeholder="Phone number">
+        <input type="email" id="email" placeholder="Email address">
+        <button id="submit-btn">Submit</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cart = []; // each item: { id, name, price, qty }
+      
+      const productListEl = document.getElementById('product-list');
+      const cartItemsContainer = document.getElementById('cart-items-container');
+      const cartTotalEl = document.getElementById('cart-total');
+      const checkoutBtn = document.getElementById('checkout-btn');
+      const checkoutForm = document.getElementById('checkout-form');
+      const submitBtn = document.getElementById('submit-btn');
+
+      function renderCart() {
+        cartItemsContainer.innerHTML = '';
+        let total = 0;
+        cart.forEach(item => {
+          const itemDiv = document.createElement('div');
+          itemDiv.classList.add('cart-item');
+          itemDiv.dataset.id = item.id;
+
+          // info
+          const infoDiv = document.createElement('div');
+          infoDiv.classList.add('info');
+          infoDiv.textContent = item.name + " — ₹" + item.price + " / unit";
+          
+          // quantity controls
+          const qtyControls = document.createElement('div');
+          qtyControls.classList.add('quantity-controls');
+          const minusBtn = document.createElement('button');
+          minusBtn.textContent = '−';
+          const qtySpan = document.createElement('span');
+          qtySpan.classList.add('qty');
+          qtySpan.textContent = item.qty;
+          const plusBtn = document.createElement('button');
+          plusBtn.textContent = '+';
+
+          qtyControls.appendChild(minusBtn);
+          qtyControls.appendChild(qtySpan);
+          qtyControls.appendChild(plusBtn);
+
+          // item total
+          const itemTotalDiv = document.createElement('div');
+          itemTotalDiv.classList.add('item-total');
+          const itemTotalPriceSpan = document.createElement('span');
+          itemTotalPriceSpan.textContent = (item.price * item.qty).toFixed(0);
+          itemTotalDiv.innerHTML = "₹";
+          itemTotalDiv.appendChild(itemTotalPriceSpan);
+
+          // assemble
+          itemDiv.appendChild(infoDiv);
+          itemDiv.appendChild(qtyControls);
+          itemDiv.appendChild(itemTotalDiv);
+
+          cartItemsContainer.appendChild(itemDiv);
+
+          total += item.price * item.qty;
+
+          // events for plus/minus
+          plusBtn.addEventListener('click', () => {
+            item.qty += 1;
+            renderCart();
+          });
+          minusBtn.addEventListener('click', () => {
+            if (item.qty > 1) {
+              item.qty -= 1;
+              renderCart();
+            }
+          });
+        });
+        cartTotalEl.textContent = total.toFixed(0);
+      }
+
+      // add to cart buttons
+      productListEl.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const prodEl = e.target.closest('.product');
+          const id = prodEl.dataset.id;
+          const name = prodEl.dataset.name;
+          const price = parseFloat(prodEl.dataset.price);
+          const existing = cart.find(item => item.id === id);
+          if (existing) {
+            existing.qty += 1;
+          } else {
+            cart.push({ id, name, price, qty: 1 });
+          }
+          renderCart();
+        });
+      });
+
+      checkoutBtn.addEventListener('click', () => {
+        if (cart.length === 0) {
+          alert("Cart is empty. Add some items first.");
+          return;
+        }
+        checkoutForm.style.display = 'block';
+      });
+
+      submitBtn.addEventListener('click', () => {
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        if (!phone) {
+          alert("Please enter your phone number");
+          return;
+        }
+        if (!email) {
+          alert("Please enter your email address");
+          return;
+        }
+        // Here you might send data to backend or store somewhere. For now just show it.
+        alert("Thank you!\n\nYour order details:\nPhone: " + phone + "\nEmail: " + email + "\nTotal: ₹" + cartTotalEl.textContent);
+        // Optionally clear the cart and form
+        cart.length = 0;
+        renderCart();
+        checkoutForm.style.display = 'none';
+        document.getElementById('phone').value = '';
+        document.getElementById('email').value = '';
+      });
+
+    });
+  </script>
+
+</body>
+</html>
